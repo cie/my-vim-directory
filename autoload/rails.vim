@@ -305,6 +305,18 @@ function! s:controller(...)
   return rails#buffer().controller_name(a:0 ? a:1 : 0)
 endfunction
 
+function! s:readable_widget_name(...) dict abort
+  let f = self.name()
+  if has_key(self,'getvar') && self.getvar('rails_controller') != ''
+    return self.getvar('rails_controller')
+  elseif f =~ '\<app/widgets/.*\.html\.haml$'
+    return s:sub(f,'.*<app/widgets/(.{-})\..*','\1')
+  elseif a:0 && a:1
+    return rails#pluralize(self.model_name())
+  endif
+  return ""
+endfunction
+
 function! s:readable_controller_name(...) dict abort
   let f = self.name()
   if has_key(self,'getvar') && self.getvar('rails_controller') != ''
@@ -2111,6 +2123,7 @@ function! s:BufFinderCommands()
     call s:addfilecmds("spec")
   endif
   call s:addfilecmds("stylesheet")
+  call s:addfilecmds("widget")
   call s:addfilecmds("javascript")
   call s:addfilecmds("plugin")
   call s:addfilecmds("task")
@@ -2200,7 +2213,12 @@ function! s:layoutList(A,L,P)
 endfunction
 
 function! s:stylesheetList(A,L,P)
-  return s:completion_filter(rails#app().relglob("public/stylesheets/","**/*",".css"),a:A)
+  return s:completion_filter(rails#app().relglob("app/stylesheets/","**/*",".css"),a:A)
+  "return s:completion_filter(rails#app().relglob("public/stylesheets/","**/*",".css"),a:A)
+endfunction
+
+function! s:widgetList(A,L,P)
+  return s:autocamelize(rails#app().relglob("app/widgets/","**/*","_widget.rb"),a:A)
 endfunction
 
 function! s:javascriptList(A,L,P)
@@ -2605,6 +2623,22 @@ function! s:controllerEdit(cmd,...)
   return s:EditSimpleRb(a:cmd,"controller",controller,"app/controllers/",suffix)
 endfunction
 
+function! s:widgetEdit(cmd,...)
+  let suffix = '.rb'
+  if a:0 == 0
+    let widget = s:controller(1)
+    if RailsFileType() =~ '^view\%(-layout\|-partial\)\@!'
+      let suffix .= '#'.expand('%:t:r')
+    endif
+  else
+    let widget = a:1
+  endif
+  if rails#app().has_file("app/widgets/".widget."_widget.rb") || !rails#app().has_file("app/widgets/".widget.".rb")
+    let suffix = "_widget".suffix
+  endif
+  return s:EditSimpleRb(a:cmd,"widget",widget,"app/widgets/",suffix)
+endfunction
+
 function! s:mailerEdit(cmd,...)
   return s:EditSimpleRb(a:cmd,"mailer",a:0? a:1 : s:controller(1),"app/mailers/\napp/models/",".rb")
 endfunction
@@ -2618,7 +2652,7 @@ function! s:stylesheetEdit(cmd,...)
   if rails#app().has('sass') && rails#app().has_file('public/stylesheets/sass/'.name.'.sass')
     return s:EditSimpleRb(a:cmd,"stylesheet",name,"public/stylesheets/sass/",".sass",1)
   else
-    return s:EditSimpleRb(a:cmd,"stylesheet",name,"public/stylesheets/",".css",1)
+    return s:EditSimpleRb(a:cmd,"stylesheet",name,"app/stylesheets/",".scss",1)
   endif
 endfunction
 
@@ -2928,6 +2962,12 @@ function! s:readable_related(...) dict abort
         return root . '.' . format
       else
         return root
+      endif
+    elseif f =~ '\<app/widgets/.*_widget\.rb$'
+      if lastmethod != ""
+        return s:sub(f, '<app/widgets/(.{-})_widget\.rb$', '\1/'.lastmethod.'.html.haml')
+      else
+        return s:sub(f, '<app/widgets/(.{-})_widget\.rb$', '\1/display.html.haml')
       endif
     elseif f =~ '\<config/environments/'
       return "config/database.yml#". fnamemodify(f,':t:r')
