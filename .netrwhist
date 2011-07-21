@@ -1,6 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/home/cie/Program/flyrtin'
-let g:netrw_dirhist_2='/home/cie/.vim/ftplugin'
-let g:netrw_dirhist_3='/home/cie/.vim'
-let g:netrw_dirhist_4='/home/cie/.vim/syntax'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/cie/Program/flyrtin/app/widgets'
+let g:netrw_dirhist_2='/usr/lib/ruby/gems/1.8/gems/apotomo-1.1.2/lib'
+let g:netrw_dirhist_3='/home/cie/Program/flyrtin/app/views'

@@ -335,6 +335,8 @@ function! s:readable_controller_name(...) dict abort
     return s:sub(f,'.*<components/(.{-})/\k+\.\k+$','\1')
   elseif f =~ '\<app/models/.*\.rb$' && self.type_name('mailer')
     return s:sub(f,'.*<app/models/(.{-})\.rb$','\1')
+  elseif f =~ '\<app/widgets/.*_widget\.rb$'
+    return s:sub(f,'.*<app/widgets/(.{-})_widget\.rb$','\1')
   elseif f =~ '\<public/stylesheets/.*\.css$'
     return s:sub(f,'.*<public/stylesheets/(.{-})\.css$','\1')
   elseif a:0 && a:1
@@ -645,6 +647,8 @@ function! s:readable_calculate_file_type() dict abort
     let r = "spec"
   elseif f =~ '_helper\.rb$'
     let r = "helper"
+  elseif f =~ '_widget\.rb$'
+    let r = "widget"
   elseif f =~ '\<app/metal/.*\.rb$'
     let r = "metal"
   elseif f =~ '\<app/mailers/.*\.rb'
@@ -4532,7 +4536,7 @@ function! s:SetBasePath()
   let old_path = s:pathsplit(s:sub(self.getvar('&path'),'^\.%(,|$)',''))
   call filter(old_path,'!s:startswith(v:val,transformed_path)')
 
-  let path = ['app', 'app/models', 'app/controllers', 'app/helpers', 'config', 'lib', 'app/views']
+  let path = ['app', 'app/models', 'app/controllers', 'app/helpers', 'config', 'lib', 'app/views', 'app/widgets']
   if self.controller_name() != ''
     let path += ['app/views/'.self.controller_name(), 'public']
   endif
