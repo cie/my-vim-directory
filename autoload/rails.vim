@@ -727,6 +727,8 @@ function! s:readable_calculate_file_type() dict abort
     let r = "stylesheet-".e
   elseif e == "js"
     let r = "javascript"
+  elseif e == "coffee"
+    let r = "coffeescript"
   elseif e == "html"
     let r = e
   elseif f =~ '\<config/routes\>.*\.rb$'
@@ -2123,6 +2125,7 @@ function! s:BufFinderCommands()
     call s:addfilecmds("spec")
   endif
   call s:addfilecmds("stylesheet")
+  call s:addfilecmds("coffeescript")
   call s:addfilecmds("widget")
   call s:addfilecmds("javascript")
   call s:addfilecmds("plugin")
@@ -2213,7 +2216,7 @@ function! s:layoutList(A,L,P)
 endfunction
 
 function! s:stylesheetList(A,L,P)
-  return s:completion_filter(rails#app().relglob("app/stylesheets/","**/*",".css"),a:A)
+  return s:completion_filter(rails#app().relglob("app/stylesheets/","**/*",".scss"),a:A)
   "return s:completion_filter(rails#app().relglob("public/stylesheets/","**/*",".css"),a:A)
 endfunction
 
@@ -2223,6 +2226,10 @@ endfunction
 
 function! s:javascriptList(A,L,P)
   return s:completion_filter(rails#app().relglob("public/javascripts/","**/*",".js"),a:A)
+endfunction
+
+function! s:coffeescriptList(A,L,P)
+  return s:completion_filter(rails#app().relglob("app/coffeescripts/","**/*",".coffee"),a:A)
 endfunction
 
 function! s:metalList(A,L,P)
@@ -2658,6 +2665,10 @@ endfunction
 
 function! s:javascriptEdit(cmd,...)
   return s:EditSimpleRb(a:cmd,"javascript",a:0? a:1 : "application","public/javascripts/",".js",1)
+endfunction
+
+function! s:coffeescriptEdit(cmd,...)
+  return s:EditSimpleRb(a:cmd,"coffeescript",a:0? a:1 : "application","app/coffeescripts/",".coffee",1)
 endfunction
 
 function! s:unittestEdit(cmd,...)
