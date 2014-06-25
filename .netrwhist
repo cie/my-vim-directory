@@ -1,5 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/home/cie/Program/flyrtin/app/widgets'
-let g:netrw_dirhist_2='/usr/lib/ruby/gems/1.8/gems/apotomo-1.1.2/lib'
-let g:netrw_dirhist_3='/home/cie/Program/flyrtin/app/views'
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/cie/Program/jmbook/packages/reactive-ace'
+let g:netrw_dirhist_2='/home/cie/lib/node_modules/grunt/lib/grunt'
+let g:netrw_dirhist_3='/home/cie/Program/autopad/lib'
+let g:netrw_dirhist_4='/home/cie/Program/angular-phonecat/app'
+let g:netrw_dirhist_5='/home/cie/git/z-book-reader/WebContent/js'
+let g:netrw_dirhist_6='/home/cie/Aalto/Term4/TES/project'
+let g:netrw_dirhist_7='/home/cie/Program/svg3d-editor/method-draw/client/extensions/imagelib'

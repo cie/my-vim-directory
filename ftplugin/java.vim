@@ -7,4 +7,4 @@ nnoremap <silent> <buffer> <leader>s :JavaSearch
 nnoremap <silent> <buffer> <leader>g :JavaGet<cr>
 nnoremap <silent> <buffer> <leader>G :JavaSet<cr>
 
-set matchpairs+=<:>
+setlocal matchpairs+=<:>

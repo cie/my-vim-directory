@@ -1,0 +1,3 @@
+Align.vba: call delete('/home/cie/.vim/plugin/AlignPlugin.vim')|call delete('/home/cie/.vim/plugin/AlignMapsPlugin.vim')|call delete('/home/cie/.vim/plugin/cecutil.vim')|call delete('/home/cie/.vim/doc/Align.txt')|call delete('/home/cie/.vim/autoload/Align.vim')|call delete('/home/cie/.vim/autoload/AlignMaps.vim')
+rdoc-1.1.3.vba: call delete('/home/cie/.vim/ftdetect/rdoc.vim')|call delete('/home/cie/.vim/snippets/rdoc.snippets')|call delete('/home/cie/.vim/syntax/rdoc.vim')
+hyperlist.vba: call delete('/home/cie/.vim/syntax/hyperlist.vim')|call delete('/home/cie/.vim/doc/hyperlist.txt')|call delete('/home/cie/.vim/ftdetect/hyperlist.vim')|call delete('/home/cie/.vim/README_HyperList')

@@ -1,2 +1,2 @@
-set syntax=qmath
+setlocal syntax=qmath
 

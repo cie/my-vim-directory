@@ -1,2 +1,2 @@
-set iskeyword+=-
-set fo-=ro
+setlocal iskeyword+=-
+setlocal fo-=ro

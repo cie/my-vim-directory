@@ -1,1 +1,1 @@
-set syntax=cucumber
+setlocal syntax=cucumber

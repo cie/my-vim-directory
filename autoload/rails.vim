@@ -349,8 +349,8 @@ function! s:readable_controller_name(...) dict abort
     return s:sub(f,'.*<app/models/(.{-})\.rb$','\1')
   elseif f =~ '\<app/widgets/.*_widget\.rb$'
     return s:sub(f,'.*<app/widgets/(.{-})_widget\.rb$','\1')
-  elseif f =~ '\<public/stylesheets/.*\.css$'
-    return s:sub(f,'.*<public/stylesheets/(.{-})\.css$','\1')
+  elseif f =~ '\<app/assets/stylesheets/.*\..*$'
+    return s:sub(f,'.*<app/assets/stylesheets/(.{-})\..*$','\1')
   elseif a:0 && a:1
     return rails#pluralize(self.model_name())
   endif
@@ -723,7 +723,7 @@ function! s:readable_calculate_file_type() dict abort
     let r = "task"
   elseif f =~ '\<log/.*\.log$'
     let r = "log"
-  elseif e == "css" || e == "sass"
+  elseif e == "css" || e == "sass" || e == "scss"
     let r = "stylesheet-".e
   elseif e == "js"
     let r = "javascript"
@@ -1926,7 +1926,7 @@ function! s:RailsFind()
   let res = s:findamethod('redirect_to\s*(\=\s*:action\s\+=>\s*','\1')
   if res != ""|return res|endif
 
-  let res = s:findfromview('stylesheet_link_tag','public/stylesheets/\1')
+  let res = s:findfromview('stylesheet_link_tag','app/assets/stylesheets/\1')
   if res != '' && fnamemodify(res, ':e') == '' " Append the default extension iff the filename doesn't already contains an extension
     let res .= '.css'
   end
@@ -2216,7 +2216,7 @@ function! s:layoutList(A,L,P)
 endfunction
 
 function! s:stylesheetList(A,L,P)
-  return s:completion_filter(rails#app().relglob("app/stylesheets/","**/*",".scss"),a:A)
+  return s:completion_filter(rails#app().relglob("app/assets/stylesheets/","**/*",".scss"),a:A)
   "return s:completion_filter(rails#app().relglob("public/stylesheets/","**/*",".css"),a:A)
 endfunction
 
@@ -2659,7 +2659,7 @@ function! s:stylesheetEdit(cmd,...)
   if rails#app().has('sass') && rails#app().has_file('public/stylesheets/sass/'.name.'.sass')
     return s:EditSimpleRb(a:cmd,"stylesheet",name,"public/stylesheets/sass/",".sass",1)
   else
-    return s:EditSimpleRb(a:cmd,"stylesheet",name,"app/stylesheets/",".scss",1)
+    return s:EditSimpleRb(a:cmd,"stylesheet",name,"app/assets/stylesheets/",".scss",1)
   endif
 endfunction
 

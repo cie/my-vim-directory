@@ -347,4 +347,4 @@ endf
 
 iunmap <buffer> /
 
-set sw=2 expandtab lbr
+setlocal sw=2 expandtab lbr
